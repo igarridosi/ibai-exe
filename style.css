@@ -1,0 +1,617 @@
+/*
+ * viiibe.lauradurieux.dev Livery kit v1.
+ * Browser defaults, on purpose: Times New Roman, #0000ee links, grey rules,
+ * square corners, no shadows, no animation. One accent and nothing else.
+ */
+
+/* ---------- Tokens ---------- */
+
+:root {
+  color-scheme: light dark;
+
+  --bg: #ffffff;
+  --text: #000000;
+  --muted: #595959;      /* #808080 is the kit's neutral; darkened for 7:1 text */
+  --rule: #808080;       /* hr, table and box borders */
+  --line: #000000;       /* 1px drawn edges */
+  --accent: #0000ee;     /* links, primary action, active state */
+  --on-accent: #ffffff;
+  --tint: #f0f0f0;       /* the only "surface": a flat grey tone */
+
+  --font: "Times New Roman", Times, serif;
+  --mono: ui-monospace, "Courier New", monospace;
+
+  /* Compact scale anchored on 16px. Biggest size is 2x body. */
+  --h1: 2rem;        /* 32px */
+  --h2: 1.5rem;      /* 24px */
+  --h3: 1.1875rem;   /* 19px */
+  --h4: 1.15625rem;  /* 18.5px */
+  --body: 1rem;      /* 16px */
+  --small: 0.84375rem; /* 13.5px */
+  --caption: 0.8125rem; /* 13px */
+
+  /* Spacing: 1, 8, 12, 16, 20 (and multiples of 20 between sections) */
+  --s1: 1px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --s5: 20px;
+}
+
+/* The source page is transparent, so it reads as white in light mode and as
+   black in dark mode. #0000ee on black is only 2.2:1, so the accent gets lighter
+   there (same hue, just brighter). */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #000000;
+    --text: #ffffff;
+    --muted: #b3b3b3;
+    --rule: #808080;
+    --line: #ffffff;
+    --accent: #9999ff;
+    --on-accent: #000000;
+    --tint: #1a1a1a;
+  }
+}
+
+/* ---------- Base ---------- */
+
+html {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 100%;
+  line-height: 1.4;
+}
+
+body {
+  margin: 0;
+  font-size: var(--body);
+}
+
+h1 { font-size: var(--h1); font-weight: 700; }
+h2 { font-size: var(--h2); font-weight: 700; }
+h3 { font-size: var(--h3); font-weight: 400; }
+h4 { font-size: var(--h4); font-weight: 700; }
+
+h1, h2, h3, h4 {
+  font-family: var(--font);
+  line-height: 1.2;
+}
+
+small { font-size: var(--small); }
+
+code, kbd, samp, pre {
+  font-family: var(--mono);
+}
+
+a {
+  color: var(--accent);
+}
+
+a:visited {
+  /* No purple: one accent, even for visited links. */
+  color: var(--accent);
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--rule);
+  margin: 0;
+}
+
+img, svg {
+  max-width: 100%;
+}
+
+/* No shadows and no rounded corners, anywhere. */
+* {
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+/* ---------- Components ---------- */
+
+/* Navigation links: bare text, no padding, no hover change. */
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav a {
+  padding: 0;
+}
+
+/* The one primary action per view. Square, flat, accent. */
+.button {
+  display: inline-block;
+  padding: var(--s2) var(--s4);
+  border: 1px solid var(--line);
+  background: var(--accent);
+  color: var(--on-accent);
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button:visited {
+  color: var(--on-accent);
+}
+
+/* Secondary actions look like the browser's own button. */
+.button-plain {
+  padding: 2px var(--s2);
+  border: 1px solid var(--line);
+  background: var(--tint);
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+
+/* Bordered tables, the way HTML 3.2 intended. */
+.grid-table {
+  width: 100%;
+  border: 1px solid var(--rule);
+  border-collapse: separate;
+  border-spacing: 2px;
+}
+
+.grid-table th,
+.grid-table td {
+  border: 1px solid var(--rule);
+  padding: var(--s2) var(--s3);
+  text-align: left;
+  vertical-align: top;
+}
+
+/* "Images": we have no photos, so we draw the box and let the alt text talk. */
+.figure {
+  margin: 0;
+}
+
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--s5);
+  border: 1px solid var(--line);
+  background: var(--tint);
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: var(--small);
+  text-align: center;
+  overflow: hidden;
+}
+
+.placeholder pre {
+  margin: 0;
+  color: var(--text);
+  font-size: var(--caption);
+  line-height: 1.2;
+  text-align: left;
+  white-space: pre;
+}
+
+.figure figcaption {
+  margin-top: var(--s2);
+  color: var(--muted);
+  font-size: var(--caption);
+}
+
+/* Disclosure list: native triangles, nothing added. */
+.faq details {
+  padding: var(--s2) 0;
+}
+
+.faq summary {
+  cursor: pointer;
+}
+
+.faq details > p {
+  margin: var(--s2) 0 0 var(--s5);
+}
+
+blockquote {
+  margin: 0;
+  font-size: var(--h3);
+}
+
+/* Form controls, as the browser draws them, but in our type. */
+input,
+select,
+button {
+  font: inherit;
+}
+
+.field {
+  padding: 2px var(--s2);
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--text);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.small {
+  font-size: var(--small);
+}
+
+.caption {
+  font-size: var(--caption);
+}
+
+/* Keyboard focus: the browser's ring, just never removed. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---------- Layout ---------- */
+
+/* Close to full width, with a small gutter. Sections are separated by <hr>
+   and spacing, not by panels. */
+
+.skip {
+  position: absolute;
+  left: -9999px;
+}
+
+.skip:focus {
+  left: var(--s2);
+  top: var(--s2);
+  padding: var(--s2);
+  background: var(--bg);
+}
+
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--s4) 15%;
+  min-height: 138px;
+  box-sizing: border-box;
+  padding: var(--s5) var(--s3);
+}
+
+.site-header .nav {
+  flex-wrap: nowrap;
+  margin-top: var(--s4);
+}
+
+.identity {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s3);
+}
+
+.identity p {
+  margin: 0 0 var(--s2);
+}
+
+.name {
+  font-size: var(--h4);
+}
+
+.avatar {
+  flex: none;
+  width: 96px;
+  height: 96px;
+  box-sizing: border-box;
+  padding: var(--s2);
+  font-size: var(--caption);
+  white-space: nowrap;
+}
+
+.small-avatar {
+  width: 48px;
+  height: 48px;
+  font-size: var(--caption);
+}
+
+main > section {
+  padding: var(--s5) var(--s3);
+}
+
+.block {
+  padding-top: 40px !important;
+  padding-bottom: 40px !important;
+}
+
+.centered {
+  text-align: center;
+}
+
+.centered .grid-table {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.grid-table h3 {
+  margin: 0 0 var(--s2);
+}
+
+.grid-table p {
+  margin: 0;
+}
+
+/* Image + text rows. */
+.split {
+  display: grid;
+  gap: 40px;
+  align-items: center;
+  padding-top: 40px !important;
+  padding-bottom: 40px !important;
+}
+
+.hero {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  padding-left: 20% !important;
+}
+
+.wide-left {
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+}
+
+.wide-right {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+}
+
+.education {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+  padding-left: 12% !important;
+  padding-right: 12% !important;
+}
+
+.split-text h1,
+.split-text h2 {
+  margin-top: 0;
+}
+
+.hero-image {
+  min-height: 300px;
+}
+
+.big-image {
+  min-height: 420px;
+}
+
+.small-image {
+  width: 220px;
+  height: 200px;
+  box-sizing: border-box;
+}
+
+.narrow {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.reference {
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.reference blockquote {
+  padding: var(--s5);
+  border: 1px solid var(--line);
+  background: var(--tint);
+}
+
+.reference figcaption {
+  margin-top: var(--s3);
+}
+
+.market-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 40px;
+  align-items: start;
+}
+
+.market-copy {
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.generator .ad {
+  margin: 0 0 var(--s3);
+  padding-left: var(--s5);
+}
+
+.generator p {
+  margin: 0 0 var(--s3);
+}
+
+.ticker {
+  min-width: 180px;
+  padding-left: var(--s4);
+  border-left: 1px solid var(--rule);
+}
+
+.ticker p {
+  margin: 0 0 var(--s4);
+}
+
+.generator {
+  min-height: 220px;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  text-align: left;
+  font-family: var(--font);
+  font-size: var(--body);
+  color: var(--text);
+}
+
+.faq h2 {
+  margin-top: 0;
+}
+
+.site-footer {
+  padding: var(--s5) var(--s3);
+}
+
+.footer-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s4);
+  max-width: 900px;
+}
+
+.footer-row .identity {
+  align-items: center;
+}
+
+.wordplay {
+  margin-top: var(--s4);
+}
+
+.testimonials td {
+  width: 25%;
+}
+
+.testimonials td p:first-child {
+  margin-top: 0;
+  font-size: var(--h4);
+}
+
+.coming-soon {
+  text-align: center;
+}
+
+.coming-soon h2 {
+  margin-top: var(--s2);
+}
+
+.chart {
+  justify-content: flex-start;
+  margin: var(--s4) 0 0;
+}
+
+.education .grid-table {
+  margin: var(--s4) 0;
+}
+
+.hire {
+  text-align: center;
+}
+
+.hire h2 {
+  margin-top: var(--s2);
+  font-size: var(--h1);
+}
+
+/* The setup wizard: a plain box with a drawn edge, like a 1997 popup. */
+.wizard {
+  width: min(480px, calc(100vw - 32px));
+  box-sizing: border-box;
+  padding: 0 var(--s5) var(--s5);
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--text);
+}
+
+.wizard::backdrop {
+  background: rgba(128, 128, 128, 0.6);
+}
+
+.wizard-bar {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s3);
+  margin: 0 calc(var(--s5) * -1) var(--s4);
+  padding: var(--s1) var(--s2);
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 700;
+}
+
+.wizard h2 {
+  margin: 0 0 var(--s3);
+}
+
+.wizard-progress {
+  margin: var(--s4) 0;
+  padding: var(--s2);
+  border: 1px solid var(--rule);
+  background: var(--tint);
+  font-size: var(--caption);
+  white-space: pre-wrap;
+}
+
+.wizard-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s3);
+}
+
+/* Phones: one column, the way HTML always wanted. */
+@media (max-width: 767px) {
+  .hero,
+  .wide-left,
+  .wide-right,
+  .education,
+  .market-grid {
+    grid-template-columns: minmax(0, 1fr);
+    padding-left: var(--s3) !important;
+    padding-right: var(--s3) !important;
+  }
+
+  .wide-right .figure {
+    order: -1;
+  }
+
+  .site-header .nav {
+    margin-top: 0;
+  }
+
+  .big-image,
+  .hero-image {
+    min-height: 240px;
+  }
+
+  .placeholder pre {
+    font-size: 9px;
+  }
+
+  .testimonials,
+  .testimonials tbody,
+  .testimonials tr,
+  .testimonials td {
+    display: block;
+    width: auto;
+    box-sizing: border-box;
+  }
+
+  .ticker {
+    padding-left: 0;
+    padding-top: var(--s4);
+    border-left: 0;
+    border-top: 1px solid var(--rule);
+  }
+}
+
+/* ---------- Motion ---------- */
+
+/* Almost static: the interface changes instantly. No transitions, no
+   animations, no smooth scrolling. Anchors jump, like it's 1997. */
+html {
+  scroll-behavior: auto;
+}
+
+*,
+*::before,
+*::after {
+  transition: none !important;
+  animation: none !important;
+}
